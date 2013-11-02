@@ -14,6 +14,10 @@ abstract class Lib_Controller {
             $this->POSTDATA = $_POST;
         }
     }
+    public function redirect($url)
+    {
+        echo '<meta http-equiv="refresh" content="0; url='.$url.'">';
+    }
     private function preView()
     {
 
@@ -53,6 +57,11 @@ abstract class Lib_Controller {
     protected function setLayouts($layouts)
     {
         $this->layouts = $layouts;
+    }
+
+    public function init()
+    {
+
     }
 
 

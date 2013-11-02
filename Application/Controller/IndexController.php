@@ -3,6 +3,7 @@ class IndexController extends Lib_Controller {
 
     public function indexAction()
     {
+
         $a = new Model_Read_FromTheFile();
         $messages = $a->read();
         $this->view->messages = $messages;
@@ -19,12 +20,7 @@ class IndexController extends Lib_Controller {
                 $value = $form->getValues();
                 $data = new Model_Write_ToTheFile($value);
                 $data->write();
-                $a = new Model_Read_FromTheFile();
-                $messages = $a->read();
-                $this->view->messages = $messages;
-                $this->view->form=$form;
-
-
+                $this->redirect('index/read');
             }
             else
             {
@@ -33,7 +29,6 @@ class IndexController extends Lib_Controller {
         }
         else
         {
-
             $this->view->form = $form;
         }
     }
@@ -43,13 +38,10 @@ class IndexController extends Lib_Controller {
     }
     public function init()
     {
-//        $this->setLayout('duplicate.phtml');
     }
-    public function readAction()
+   public function readAction()
     {
-//        $new = new DateTime();
-//        $this->view->date = $new->format("Y-m-d H:i:s");
-        header('Location:/index/');
+     $this->redirect('index');
     }
 
 }

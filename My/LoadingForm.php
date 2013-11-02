@@ -5,7 +5,7 @@ class My_LoadingForm extends Zend_Form
 {
     public function init()
     {
-        $this->setAction('index/read/')
+        $this->setAction('index/')
             ->setMethod('post');
 
 

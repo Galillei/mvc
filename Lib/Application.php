@@ -1,8 +1,17 @@
 <?php
 class Lib_Application {
-    private $path;
+    public  $path;
     private $config;
     protected static $instance = null;
+    protected static $register = array();
+    public function set($name,$arg)
+    {
+        self::$register[$name] = $arg;
+    }
+    public function get($name)
+    {
+        return self::$register[$name];
+    }
 
     private function getController()
     {
@@ -44,7 +53,16 @@ class Lib_Application {
     {
         $namespace = $this->config->getNamespace();
         $dir = $this->config->getNameViewsDir();
+
+        if((strpos($this->path,'index'))!==1)
+        {
+            $dir_path = $dir_path = $namespace.'/'.$dir.'/'.substr($this->path,1).'/'.str_replace('Action','',$this->getAction());
+        }
+        else
+        {
         $dir_path = $namespace.'/'.$dir.'/'.str_replace('Action','',$this->getAction());
+        }
+        var_dump($dir_path);
         return $dir_path.'.phtml';
     }
     public function getLayouts()
@@ -79,16 +97,10 @@ class Lib_Application {
     {
         $this->path = $_SERVER['REQUEST_URI'];
         $controller = $this->getController();
-//        var_dump($controller);
         $a = new $controller();
         $action = $this->getAction();
         call_user_func(array($a,'init'));
         call_user_func(array($a,$action));
         call_user_func(array($a,'initView'));
-
-//        call_user_func(array($a,'display'));//for display views
-
-
     }
-
 }
